@@ -12,5 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return "Kelas => XII RPL 4";
+
 });
+
+Route::get('/me', function() {
+	return ["NIS" => "3103118133", "Name" => "Tri Puput Wilujeng", "Gender" => "Perempuan", "Phone" => "085848191370", "Class"=> "XII RPL 4"];
+
+});
+
+Route::get('/kontrol', function() {
+	return"latihan control";
+
+});
+
+
