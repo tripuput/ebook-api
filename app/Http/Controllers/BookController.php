@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Book;
+use JWTAuth;
+
+
 class BookController extends Controller
 {
     /**
@@ -15,15 +18,18 @@ class BookController extends Controller
     public function index()
     {
         //
-       $book = Book::all();
-        if ($book && $book->count()) {
-            return Response(["message" => "Show data success", "data" => $book], 200);
-        }else{
-            return Response(["message" => "Data not found", "data" => null], 404);
-        }
+        return Book::get();
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -33,6 +39,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        //
         return Book::create([
             "title" => $request->title,
             "description" => $request->description,
@@ -50,7 +57,21 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        return Book::find($id);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+    public function __construct() {
+        $this->middleware('auth:api');
     }
 
     /**
@@ -62,17 +83,14 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $book = Book::find($id);
-        if ($book) {
-            $book->title = $request->title;
-            $book->description = $request->description;
-            $book->author = $request->author;
-            $book->publisher = $request->publisher;
-            $book->date_of_issue = $request->date_of_issue;
-
-            $book->save();
-        }
-        return $book;
+        //
+        return Book::whereId($id)->update([
+            "title" => $request->title,
+            "description" => $request->description,
+            "author" => $request->author,
+            "publisher" => $request->publisher,
+            "date_of_issue" => $request->date_of_issue,
+        ]);
     }
 
     /**
@@ -83,8 +101,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $Book = Book:: find ($id);
-        $Book->delete();
-        return "Data berhasil di hapus";
+        //
+        $buku = Book::find($id);
+        $buku->delete();
     }
 }

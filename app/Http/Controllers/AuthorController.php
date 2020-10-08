@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\author;
 
 class AuthorController extends Controller
@@ -14,14 +15,22 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $author = author::all();
-        if ($author && $author->count()) {
-            return Response(["message" => "Show data success", "data" => $author], 200);
-        }else{
-            return Response(["message" => "Data not found", "data" => null], 404);
-        }
+        //
+        return author::get();
+
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+   
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -31,6 +40,7 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
+        //
         return author::create([
             "name" => $request->name,
             "date_of_birth" => $request->date_of_birth,
@@ -49,7 +59,20 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
+        //
         return author::find($id);
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -61,18 +84,15 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $author = Author::find($id);
-        if ($author) {
-            $author->name = $request->name;
-            $author->date_of_birth = $request->date_of_birth;
-            $author->place_of_birth = $request->place_of_birth;
-            $author->gender = $request->gender;
-            $author->email = $request->email;
-            $author->hp = $request->hp;
-
-            $author->save();
-        }
-        return $author;
+        //
+        return author::whereId($id)->update([
+            "name" => $request->name,
+            "date_of_birth" => $request->date_of_birth,
+            "place_of_birth" => $request->place_of_birth,
+            "gender" => $request->gender,
+            "email" => $request->email,
+            "hp" => $request->hp,
+        ]);
     }
 
     /**
@@ -83,8 +103,7 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        $author = author::find($id);
-        $author->delete();
-        return "Data berhasil di hapus";
+        //
+        return author::destroy($id);
     }
 }
